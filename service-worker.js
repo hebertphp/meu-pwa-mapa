@@ -6,9 +6,7 @@ const FILES_TO_CACHE = [
   '/script.js',
   '/manifest.json',
   '/icons/icon-192.png',
-  '/icons/icon-512.png',
-  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
-  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
+  '/icons/icon-512.png'
 ];
 
 self.addEventListener('install', event => {
