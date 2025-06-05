@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA com Mapa Leaflet</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha2048-..."
+        crossorigin=""/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #map {
+            height: 400px; /* Altura do mapa */
+            width: 90%; /* Largura do mapa */
+            max-width: 800px;
+            margin: 0 auto; /* Centraliza o mapa */
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            display: none; /* Ocultar o mapa inicialmente */
+        }
+    </style>
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+    <h1>Meu PWA de Localização</h1>
+    <button id="showLocationButton">Mostrar Minha Posição no Mapa</button>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha2048-..."
+        crossorigin=""></script>
+    <script src="app.js"></script>
+    <script>
+        // Registrar o Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('Service Worker registrado com sucesso:', registration);
+                    })
+                    .catch(error => {
+                        console.error('Falha no registro do Service Worker:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
