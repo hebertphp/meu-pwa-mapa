@@ -11,7 +11,7 @@
 </head>
 <body>
   <div id="app">
-    <h1>Meu PWA com Leaflet</h1 - v5>
+    <h1>Meu PWA com Leaflet v6</h1>
     <div id="mapa"></div>
     <div id="info"></div>
     <div id="footer">
@@ -20,12 +20,5 @@
   </div>
 
   <script src="script.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(reg => console.log('Service Worker registrado!', reg))
-        .catch(err => console.error('Erro no Service Worker', err));
-    }
-  </script>
 </body>
 </html>
