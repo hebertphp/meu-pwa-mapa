@@ -1,41 +1,33 @@
-document.addEventListener('DOMContentLoaded', () => {
-  // Inicializa o mapa focado na Av. Paulista
-  const mapa = L.map('mapa').setView([-23.561684, -46.655981], 15);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors'
-  }).addTo(mapa);
+let mapa = L.map('mapa').setView([-23.561684, -46.655981], 15); // Av. Paulista
 
-  let marcadorUsuario = null;
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap contributors'
+}).addTo(mapa);
 
-  document.getElementById('btnLocalizacao').addEventListener('click', () => {
-    if (!navigator.geolocation) {
-      document.getElementById('saidaLocalizacao').textContent = 'Geolocalização não suportada.';
-      return;
-    }
+let marcadorUsuario;
 
+document.getElementById('btnLocalizar').addEventListener('click', () => {
+  if ('geolocation' in navigator) {
     navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
+      pos => {
+        const { latitude, longitude } = pos.coords;
+        document.getElementById('info').innerText = `Latitude: ${latitude.toFixed(6)}, Longitude: ${longitude.toFixed(6)}`;
 
-        document.getElementById('saidaLocalizacao').textContent =
-          `Latitude: ${lat.toFixed(6)}, Longitude: ${lon.toFixed(6)}`;
-
-        // Move o mapa para a posição atual
-        mapa.setView([lat, lon], 16);
-
-        // Remove o marcador anterior, se houver
+        // Atualiza mapa e marcador
+        mapa.setView([latitude, longitude], 16);
         if (marcadorUsuario) {
-          mapa.removeLayer(marcadorUsuario);
+          marcadorUsuario.setLatLng([latitude, longitude]);
+        } else {
+          marcadorUsuario = L.marker([latitude, longitude]).addTo(mapa)
+            .bindPopup("Você está aqui!").openPopup();
         }
-
-        // Adiciona marcador na posição atual
-        marcadorUsuario = L.marker([lat, lon]).addTo(mapa)
-          .bindPopup('Você está aqui!').openPopup();
       },
-      (error) => {
-        document.getElementById('saidaLocalizacao').textContent = 'Erro ao obter localização.';
+      err => {
+        document.getElementById('info').innerText = "Erro ao obter localização.";
+        console.error(err);
       }
     );
-  });
+  } else {
+    document.getElementById('info').innerText = "Geolocalização não suportada.";
+  }
 });
