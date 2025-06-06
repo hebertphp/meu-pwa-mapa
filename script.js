@@ -1,55 +1,44 @@
-// Inicia o mapa na Av. Paulista
-const mapa = L.map('mapa').setView([-23.561684, -46.655981], 16);
+// Inicializa o mapa centralizado na Av. Paulista
+const mapa = L.map('mapa').setView([-23.561684, -46.655981], 16); // Av. Paulista
+
+// Adiciona camada do OpenStreetMap
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© OpenStreetMap contributors'
 }).addTo(mapa);
 
-let marcador = null;
+// Variável global para o marcador
+let marcadorUsuario = null;
 
-document.getElementById('btnLocalizacao').addEventListener('click', () => {
-  if ('geolocation' in navigator) {
-    navigator.geolocation.getCurrentPosition(async pos => {
+// Botão para localizar o usuário
+document.getElementById('btnLocalizar').addEventListener('click', () => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(pos => {
       const lat = pos.coords.latitude;
-      const lon = pos.coords.longitude;
+      const lng = pos.coords.longitude;
 
-      mapa.setView([lat, lon], 16);
+      // Atualiza texto da posição
+      document.getElementById('info').innerHTML =
+        `Latitude: ${lat.toFixed(5)}, Longitude: ${lng.toFixed(5)}`;
 
-       if (marcadorUsuario) {
-          marcadorUsuario.setLatLng([latitude, longitude]);
-        } else {
-          marcadorUsuario = L.marker([latitude, longitude]).addTo(mapa)
-            .bindPopup("Você está aqui!").openPopup();
-        }
-      },
-      err => {
-        document.getElementById('info').innerText = "Erro ao obter localização.";
-        console.error(err);
+      // Move o mapa para a posição atual
+      mapa.setView([lat, lng], 16);
+
+      // Remove marcador anterior (se existir)
+      if (marcadorUsuario) {
+        mapa.removeLayer(marcadorUsuario);
       }
-    );
-  } else {
-    document.getElementById('info').innerText = "Geolocalização não suportada.";
-  }
-});
 
-      // Requisição para obter nome da rua, cidade etc
-      const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`;
-      const resposta = await fetch(url);
-      const dados = await resposta.json();
-      const end = dados.address;
+      // Cria novo marcador com popup
+      marcadorUsuario = L.marker([lat, lng])
+        .addTo(mapa)
+        .bindPopup('📍 Você está aqui!')
+        .openPopup();
 
-      const texto = `
-        Latitude: ${lat.toFixed(5)}<br>
-        Longitude: ${lon.toFixed(5)}<br>
-        Rua: ${end.road || 'N/D'}<br>
-        Bairro: ${end.suburb || end.neighbourhood || 'N/D'}<br>
-        Cidade: ${end.city || end.town || end.village || 'N/D'}<br>
-        Estado: ${end.state || 'N/D'}
-      `;
-      document.getElementById('info').innerHTML = texto;
-    }, erro => {
-      alert('Erro ao obter localização: ' + erro.message);
+    }, err => {
+      console.error('Erro ao obter localização:', err);
+      document.getElementById('info').innerText = 'Não foi possível obter sua localização.';
     });
   } else {
-    alert('Geolocalização não suportada neste navegador.');
+    alert('Geolocalização não suportada pelo navegador.');
   }
 });
