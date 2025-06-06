@@ -27,5 +27,27 @@
   </footer>
 
   <script src="script.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+    .then(reg => {
+      // Verifica se há um novo service worker
+      reg.onupdatefound = () => {
+        const novoSW = reg.installing;
+        novoSW.onstatechange = () => {
+          if (novoSW.state === 'installed') {
+            if (navigator.serviceWorker.controller) {
+              // Novo conteúdo disponível, recarrega a página
+              console.log('Nova versão detectada. Recarregando...');
+              window.location.reload();
+            }
+          }
+        };
+      };
+    })
+    .catch(err => console.error('Erro ao registrar o Service Worker:', err));
+}
+
+  </script>
 </body>
 </html>
