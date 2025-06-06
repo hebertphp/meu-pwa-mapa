@@ -3,21 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meu PWA Mapa</title>
+  <title>PWA Mapa</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="libs/leaflet.css" />
   <script src="libs/leaflet.js"></script>
 </head>
 <body>
-  <div id="app">
-    <h1>Meu PWA com Leaflet v6</h1>
+  <header>
+    <h1>PWA Mapa - V7</h1>
+  </header>
+
+  <main>
     <div id="mapa"></div>
+    <button id="btnLocalizacao">📍 Minha Localização</button>
     <div id="info"></div>
-    <div id="footer">
-      <button id="btnLocalizar">Minha Localização</button>
-    </div>
-  </div>
+  </main>
+
+  <footer>
+    <button>🏠 Início</button>
+    <button>📌 Locais</button>
+    <button>⚙️ Configurações</button>
+  </footer>
 
   <script src="script.js"></script>
 </body>
