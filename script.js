@@ -10,7 +10,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 let marcadorUsuario = null;
 
 // Botão para localizar o usuário
-document.getElementById('btnLocalizar').addEventListener('click', () => {
+document.getElementById('btnLocalizacao').addEventListener('click', () => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(pos => {
       const lat = pos.coords.latitude;
