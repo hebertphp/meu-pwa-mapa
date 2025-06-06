@@ -14,11 +14,22 @@ document.getElementById('btnLocalizacao').addEventListener('click', () => {
 
       mapa.setView([lat, lon], 16);
 
-      if (marcador) {
-        marcador.setLatLng([lat, lon]);
-      } else {
-        marcador = L.marker([lat, lon]).addTo(mapa);
+       if (marcadorUsuario) {
+          marcadorUsuario.setLatLng([latitude, longitude]);
+        } else {
+          marcadorUsuario = L.marker([latitude, longitude]).addTo(mapa)
+            .bindPopup("Você está aqui!").openPopup();
+        }
+      },
+      err => {
+        document.getElementById('info').innerText = "Erro ao obter localização.";
+        console.error(err);
       }
+    );
+  } else {
+    document.getElementById('info').innerText = "Geolocalização não suportada.";
+  }
+});
 
       // Requisição para obter nome da rua, cidade etc
       const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`;
