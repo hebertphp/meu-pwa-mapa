@@ -2,29 +2,22 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Meu PWA Mapa - Av Paulista1 - v2</title>
-
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meu PWA Mapa</title>
   <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="libs/leaflet.css" />
+  <script src="libs/leaflet.js"></script>
 </head>
 <body>
-  <header>
-    <h1>Mapa Interativo - v4</h1>
-  </header>
-
-  <main>
+  <div id="app">
+    <h1>Meu PWA com Leaflet</h1 - v5>
     <div id="mapa"></div>
-    <div id="saidaLocalizacao">Sua localização aparecerá aqui.</div>
-    <button id="btnLocalizacao">Mostrar minha localização</button>
-  </main>
-
-  <nav class="navbar">
-    <button class="nav-btn">Mapa</button>
-    <button class="nav-btn">Perfil</button>
-    <button class="nav-btn">Config</button>
-  </nav>
+    <div id="info"></div>
+    <div id="footer">
+      <button id="btnLocalizar">Minha Localização</button>
+    </div>
+  </div>
 
   <script src="script.js"></script>
   <script>
