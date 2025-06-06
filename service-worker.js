@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pwa-mapa-v9';
+const CACHE_NAME = 'pwa-mapa-v10';
 const FILES_TO_CACHE = [
   '.',
   'index.html',
