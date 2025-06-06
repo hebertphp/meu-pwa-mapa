@@ -1,33 +1,25 @@
-let mapa = L.map('mapa').setView([-23.561684, -46.655981], 15); // Av. Paulista
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+    .then(reg => {
+      console.log('Service Worker registrado!', reg);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenStreetMap contributors'
-}).addTo(mapa);
-
-let marcadorUsuario;
-
-document.getElementById('btnLocalizar').addEventListener('click', () => {
-  if ('geolocation' in navigator) {
-    navigator.geolocation.getCurrentPosition(
-      pos => {
-        const { latitude, longitude } = pos.coords;
-        document.getElementById('info').innerText = `Latitude: ${latitude.toFixed(6)}, Longitude: ${longitude.toFixed(6)}`;
-
-        // Atualiza mapa e marcador
-        mapa.setView([latitude, longitude], 16);
-        if (marcadorUsuario) {
-          marcadorUsuario.setLatLng([latitude, longitude]);
-        } else {
-          marcadorUsuario = L.marker([latitude, longitude]).addTo(mapa)
-            .bindPopup("Você está aqui!").openPopup();
-        }
-      },
-      err => {
-        document.getElementById('info').innerText = "Erro ao obter localização.";
-        console.error(err);
-      }
-    );
-  } else {
-    document.getElementById('info').innerText = "Geolocalização não suportada.";
-  }
-});
+      // Verifica atualizações do Service Worker
+      reg.onupdatefound = () => {
+        const novoSW = reg.installing;
+        novoSW.onstatechange = () => {
+          if (novoSW.state === 'installed') {
+            if (navigator.serviceWorker.controller) {
+              // Uma nova versão está disponível
+              const atualizar = confirm('Uma nova versão do aplicativo está disponível. Deseja atualizar agora?');
+              if (atualizar) {
+                window.location.reload();
+              }
+            } else {
+              console.log('Conteúdo armazenado para uso offline.');
+            }
+          }
+        };
+      };
+    })
+    .catch(err => console.error('Erro ao registrar o Service Worker:', err));
+}
