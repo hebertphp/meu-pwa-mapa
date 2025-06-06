@@ -7,5 +7,5 @@ body {
 #mapa {
   height: 400px;
   margin-top: 20px;
-  display: none;
+  display: block;
 }
