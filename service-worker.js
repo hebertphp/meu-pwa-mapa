@@ -1,6 +1,6 @@
 const CACHE_NAME = 'pwa-mapa-v1';
 const FILES_TO_CACHE = [
-  '.',                  // ou './'
+  '.',
   'index.html',
   'style.css',
   'script.js',
@@ -11,11 +11,11 @@ const FILES_TO_CACHE = [
   'libs/leaflet.js'
 ];
 
-
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(FILES_TO_CACHE))
+      .catch(err => console.error('Erro no cache.addAll:', err))
   );
   self.skipWaiting();
 });
