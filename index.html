@@ -10,14 +10,23 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
-  <button id="btnLocalizacao">Mostrar minha localização</button>
-  <div id="saidaLocalizacao">Latitude e Longitude aparecerão aqui.</div>
-  <div id="mapa"></div>
+  <header>
+    <h1>Mapa Interativo - v4</h1>
+  </header>
 
+  <main>
+    <div id="mapa"></div>
+    <div id="saidaLocalizacao">Sua localização aparecerá aqui.</div>
+    <button id="btnLocalizacao">Mostrar minha localização</button>
+  </main>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <nav class="navbar">
+    <button class="nav-btn">Mapa</button>
+    <button class="nav-btn">Perfil</button>
+    <button class="nav-btn">Config</button>
+  </nav>
+
   <script src="script.js"></script>
-
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js')
