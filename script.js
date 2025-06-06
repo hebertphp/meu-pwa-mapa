@@ -1,3 +1,14 @@
+// Corrigir o ícone padrão do marcador Leaflet
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'libs/marker-icon-2x.png',
+  iconUrl: 'libs/marker-icon.png',
+  shadowUrl: 'libs/marker-shadow.png'
+});
+
+
+
 // Inicializa o mapa centralizado na Av. Paulista
 const mapa = L.map('mapa').setView([-23.561684, -46.655981], 16); // Av. Paulista
 
